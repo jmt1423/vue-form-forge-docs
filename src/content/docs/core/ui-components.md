@@ -1,0 +1,105 @@
+---
+title: UI Components
+description: Updating, or removing components
+---
+
+All of the ui elements inside the `components/ui` folder were made using the shadcn-vue except for the `/loader`
+and `/validation-card`.
+
+For more information regarding shadcn-vue components please see their docs: [shadcn-vue](https://www.shadcn-vue.com/)
+
+I have tried to keep most of my logic out of the atomic UI components to allow you to easily swap in your own
+component library. The sidebars are the only exception to this
+
+### Caution
+> IMPORTANT: Do not swap out the sidebar component without understanding what is going on inside of it. However,
+> once you know what is in each file it would be easy enough to move the functionality into whatever sidebar
+> component you want to use.
+
+## Sidebar
+### `SidebarMenu.vue`
+This file contains the drag and drop initialization, and adds a sudo-random key to each element
+dragged into the drop area.
+
+Each element requires a different key or else the sorting functionality of the custom insert plugin will break!
+
+```vue
+// SidebarMenu.vue
+<script setup lang="ts">
+import { type HTMLAttributes, provide } from "vue";
+import { cn } from "../../../utils/utils";
+import { useDragAndDrop } from "@formkit/drag-and-drop/vue";
+import { defaultFormElements } from "../../../utils/default-form-elements.ts";
+
+const props = defineProps<{
+  class?: HTMLAttributes["class"];
+}>();
+
+function generateKey() {
+  return Date.now().toString(36) + Math.random().toString(36).substring(2);
+}
+
+const [formEls, els] = useDragAndDrop(defaultFormElements, {
+  group: "form-builder",
+  nativeDrag: true,
+  draggingClass: "opacity-70",
+  sortable: false,
+  accepts: () => false,
+  onDragstart: ({ draggedNodes }) => { // random key
+    draggedNodes.forEach((node) => {
+      if (node.data?.value) {
+        const newKey = generateKey();
+        node.data.value = {
+          ...node.data.value,
+          __key: newKey,
+        };
+      }
+    });
+  },
+});
+
+provide("formEls", els);
+</script>
+
+<template>
+  <ul
+    data-slot="sidebar-menu"
+    ref="formEls"
+    data-sidebar="menu"
+    :class="cn('flex w-full min-w-0 flex-col gap-4 h-full', props.class)"
+  >
+    <slot />
+  </ul>
+</template>
+```
+
+### `SidebarMenuItem.vue`
+
+The Formkit drag and drop library works with unordered lists of items, and each list item is rendered in this file.
+
+```vue
+// SidebarMenuItem.vue
+<script setup lang="ts">
+import type { HTMLAttributes } from 'vue'
+import { cn } from '../../../utils/utils'
+
+const props = defineProps<{
+  class?: HTMLAttributes['class']
+}>()
+</script>
+
+<template>
+  <li
+    data-slot="sidebar-menu-item"
+    data-sidebar="menu-item"
+    :class="cn('group/menu-item relative', props.class)"
+    draggable="true"
+  >
+    <slot />
+  </li>
+</template>
+```
+
+
+
+

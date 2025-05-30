@@ -1,46 +1,70 @@
 ---
-title: Welcome to Starlight
+title: Welcome to Form Forge
 description: Get started building your docs site with Starlight.
 template: splash
 hero:
   title: |
-    Welcome to Starlight with
+    Welcome to
+    <span class="font-black text-transparent bg-clip-text bg-gradient-to-b from-accent-600 to-emerald-300 dark:from-accent-800 dark:to-emerald-300">Form Forge</span>
+    for
     <span
       class="font-black text-transparent
         bg-clip-text bg-gradient-to-b
-        from-accent-700 to-accent-400
-        dark:from-accent-500 dark:to-accent-200"
+        from-accent-600 to-emerald-300
+        dark:from-emerald-900 dark:to-emerald-100"
     >
-      Tailwind
+      Vue
     </span>
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Allow your users to build forms with ease!
   image:
-    file: ../../assets/houston.webp
+    file: ../../../public/favicon.svg
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: Get started
+      link: /core/installation/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+    - text: Want to contribute? Here's the Github!
+      link: https://github.com/jmt1423/vue-form-forge
       icon: external
       variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid } from "@astrojs/starlight/components";
+import { Icon } from "@astrojs/starlight/components";
 
-## Next steps
+## Get started
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+  <Card title="Install source files" icon="download">
+    <span class="flex flex-row items-center justify-between">
+      Run `npx @vue-form-forge/cli@latest` to get the source files and
+      dependencies.
+      <a href="https://github.com/jmt1423/vue-form-forge" class="w-10 h-10">
+        <Icon name={"external"} size="2rem" />
+      </a>
+    </span>
+  </Card>
+  <Card title="Setup TailwindV4" icon="add-document">
+    <span class="flex flex-row items-center justify-between">
+      Install TailwindV4 and add the `tailwind.config.js` to your project root.
+      <a href="https://github.com/jmt1423/vue-form-forge" class="w-10 h-10">
+        <Icon name={"external"} size="2rem" />
+      </a>
+    </span>
+  </Card>
+  <Card title="Configure Formkit theming" icon="setting">
+    <span class="flex flex-row items-center justify-between">
+      Add the `formkit.config.ts` and `formkit.theme.ts` files.
+      <a href="https://github.com/jmt1423/vue-form-forge" class="w-10 h-10">
+        <Icon name={"external"} size="2rem" />
+      </a>
+    </span>
+  </Card>
+  <Card title="Add the component anywhere" icon="open-book">
+    <span class="flex flex-row items-center justify-between">
+      Add the `<BuilderProvider /> and <FormBuilder />` components to your app.
+      <a href="https://github.com/jmt1423/vue-form-forge" class="w-10 h-10">
+        <Icon name={"external"} size="2rem" />
+      </a>
+    </span>
+  </Card>
 </CardGrid>

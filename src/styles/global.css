@@ -1,14 +1,39 @@
 @layer base, starlight, theme, components, utilities;
 
-@import '@astrojs/starlight-tailwind';
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/utilities.css' layer(utilities);
+@import "@astrojs/starlight-tailwind";
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 
 @theme {
-	/*
+  /* Generated accent color palettes - Green scheme */
+  --color-accent-200: #a8d9a8;
+  --color-accent-600: #2e7a2e;
+  --color-accent-900: #145014;
+  --color-accent-950: #0c2d0c;
+  /* Generated gray color palettes - Subtle green tints */
+  --color-gray-100: #f6f8f6;
+  --color-gray-200: #eef2ee;
+  --color-gray-300: #c2c8c2;
+  --color-gray-400: #8b928b;
+  --color-gray-500: #585e58;
+  --color-gray-700: #384038;
+  --color-gray-800: #272a27;
+  --color-gray-900: #181a18;
+  --secondary: #444944ff;
+  /*
 	Configure your Tailwind theme that will be used by Starlight.
 	https://starlight.astro.build/guides/css-and-tailwind/#styling-starlight-with-tailwind
 	*/
+}
+
+.card {
+  @apply rounded-4xl bg-gradient-to-br from-white to-emerald-100/50 dark:from-accent-600/10 dark:to-emerald-800/30 transition-transform duration-300 ease-in-out hover:scale-105;
+}
+
+.expressive-code {
+  overflow-y: auto;
+  max-height: 80vh;
+
 }
 
 /*
