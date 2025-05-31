@@ -3,6 +3,8 @@ title: UI Components
 description: Updating, or removing components
 ---
 
+import { Aside } from "@astrojs/starlight/components";
+
 All of the ui elements inside the `components/ui` folder were made using the shadcn-vue except for the `/loader`
 and `/validation-card`.
 
@@ -11,13 +13,15 @@ For more information regarding shadcn-vue components please see their docs: [sha
 I have tried to keep most of my logic out of the atomic UI components to allow you to easily swap in your own
 component library. The sidebars are the only exception to this
 
-### Caution
-> IMPORTANT: Do not swap out the sidebar component without understanding what is going on inside of it. However,
-> once you know what is in each file it would be easy enough to move the functionality into whatever sidebar
-> component you want to use.
+<Aside type="danger">
+    The sidebar component contains code that is essential to the functionality
+    of the form builder. If removed, please be sure to move the code somewhere else.
+</Aside>
 
 ## Sidebar
+
 ### `SidebarMenu.vue`
+
 This file contains the drag and drop initialization, and adds a sudo-random key to each element
 dragged into the drop area.
 
@@ -45,7 +49,8 @@ const [formEls, els] = useDragAndDrop(defaultFormElements, {
   draggingClass: "opacity-70",
   sortable: false,
   accepts: () => false,
-  onDragstart: ({ draggedNodes }) => { // random key
+  onDragstart: ({ draggedNodes }) => {
+    // random key
     draggedNodes.forEach((node) => {
       if (node.data?.value) {
         const newKey = generateKey();
@@ -80,12 +85,12 @@ The Formkit drag and drop library works with unordered lists of items, and each 
 ```vue
 // SidebarMenuItem.vue
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
-import { cn } from '../../../utils/utils'
+import type { HTMLAttributes } from "vue";
+import { cn } from "../../../utils/utils";
 
 const props = defineProps<{
-  class?: HTMLAttributes['class']
-}>()
+  class?: HTMLAttributes["class"];
+}>();
 </script>
 
 <template>
@@ -99,7 +104,3 @@ const props = defineProps<{
   </li>
 </template>
 ```
-
-
-
-

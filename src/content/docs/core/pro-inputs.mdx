@@ -3,6 +3,8 @@ title: Default Items and Pro Inputs
 description: Extending the form builder with formkit pro inputs
 ---
 
+import { Aside } from "@astrojs/starlight/components";
+
 ## Default Values
 
 There are currently seventeen input types and are all available for free.
@@ -230,8 +232,10 @@ If you want to add to the number of form inputs your users have access to, formk
 Once you sign up over at: [Formkit Pro](https://formkit.com/pro), it is easy as just adding the correct
 schema object into the default form elements data structure:
 
-> NOTE: using pro inputs in development is free and you will not be charged unless you are using them in a
-> production environment
+<Aside>
+    Using pro inputs in development is free and you will not be charged unless you are using them in a
+    production environment
+</Aside>
 
 ```typescript
 // default-form-elements.ts

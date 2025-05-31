@@ -3,216 +3,222 @@ title: Installation
 description: A guide to install the form builder
 ---
 
+import { Steps } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+
 ## Prerequisites
 
-> Please note this is not an NPM package and cannot be installed as such. The CLI is the official way to get up
-> and running with the form builder.
+<Aside>
+  Please note this is not an NPM package and cannot be installed as such. The
+  CLI is the official way to get up and running with the form builder.
+</Aside>
 
 - Node.js (v16 or later)
 - Vue 3 (preferably with Vite)
 
-## 1. Run the CLI
+## Installation Process
 
-```bash
-npx @vue-form-forge/cli@latest
-```
+<Steps>
+    1. ### Run the CLI
+        ```bash
+        npx @vue-form-forge/cli@latest
+        ```
+        This command will install the required dependencies and add the form builder to your `src/components/form-builder`
+        directory.
 
-This command will install the required dependencies and add the form builder to your `src/components/form-builder`
-directory.
+    2. ### Tailwind setup and CSS theme
 
-## 2. Tailwind setup and CSS theme
+        ```bash
+        npm install tailwindcss @tailwindcss/vite
+        ```
 
-```bash
-npm install tailwindcss @tailwindcss/vite
-```
+        #### **Add tailwind to your `vite.config.ts` file**
 
-### **Add tailwind to your `vite.config.ts` file**
+        ```typescript
+        // vite.config.ts
+        import { defineConfig } from "vite";
+        import tailwindcss from "@tailwindcss/vite";
 
-```typescript
-// vite.config.ts
-import { defineConfig } from "vite";
-import tailwindcss from "@tailwindcss/vite";
+        export default defineConfig({
+            plugins: [tailwindcss()],
+        });
+        ```
 
-export default defineConfig({
-  plugins: [tailwindcss()],
-});
-```
+        #### **Add a `tailwind.config.js` file**
 
-### **Add a `tailwind.config.js` file**
+        > **IMPORTANT**: for the Formkit theme to work, you will need a tailwind config file even if you are using v4.
 
-> **IMPORTANT**: for the Formkit theme to work, you will need a tailwind config file even if you are using v4.
+        ```javascript
+        // tailwind.config.js
+        module.exports = {
+            content: ["formkit.theme.ts"],
+            purge: [],
+            darkMode: "class",
+            theme: {
+                extend: {},
+            },
+            variants: {
+                extend: {},
+            },
+            plugins: [],
+        };
+        ```
 
-```javascript
-// tailwind.config.js
-module.exports = {
-  content: ["formkit.theme.ts"],
-  purge: [],
-  darkMode: "class",
-  theme: {
-    extend: {},
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-};
-```
+        #### **Update your main `style.css` file**
 
-### **Update your main `style.css` file**
+        <Aside>
+            The theme variables below are not technically required, however they are highly recommended even if you plan
+            on changing the theme and styles yourself.
+        </Aside>
 
-> The theme variables below are not technically required, however they are highly recommended even if you plan
-> on changing the theme and styles yourself.
+        ```css
+        // style.css
+        @import "tailwindcss";
+        @import "tw-animate-css";
 
-```css
-// style.css
-@import "tailwindcss";
-@import "tw-animate-css";
+        @custom-variant dark (&:is(.dark *));
+        @config "../../tailwind.config.js";
 
-@custom-variant dark (&:is(.dark *));
-@config "../../tailwind.config.js";
+        @theme inline {
+            --color-background: var(--background);
+            --color-foreground: var(--foreground);
+            --color-card: var(--card);
+            --color-card-foreground: var(--card-foreground);
+            --color-popover: var(--popover);
+            --color-popover-foreground: var(--popover-foreground);
+            --color-primary: var(--primary);
+            --color-primary-foreground: var(--primary-foreground);
+            --color-secondary: var(--secondary);
+            --color-secondary-foreground: var(--secondary-foreground);
+            --color-muted: var(--muted);
+            --color-muted-foreground: var(--muted-foreground);
+            --color-accent: var(--accent);
+            --color-accent-foreground: var(--accent-foreground);
+            --color-destructive: var(--destructive);
+            --color-destructive-foreground: var(--destructive-foreground);
+            --color-border: var(--border);
+            --color-input: var(--input);
+            --color-border-red: var(--border-red);
+            --color-ring: var(--ring);
+            --radius-sm: calc(var(--radius) - 4px);
+            --radius-md: calc(var(--radius) - 2px);
+            --radius-lg: var(--radius);
+            --radius-xl: calc(var(--radius) + 4px);
+            --color-sidebar: var(--sidebar);
+            --color-sidebar-foreground: var(--sidebar-foreground);
+            --color-sidebar-primary: var(--sidebar-primary);
+            --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+            --color-sidebar-accent: var(--sidebar-accent);
+            --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+            --color-sidebar-border: var(--sidebar-border);
+            --color-sidebar-ring: var(--sidebar-ring);
+        }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-border-red: var(--border-red);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
+        :root {
+            --background: oklch(0.99 0.02 145);
+            --foreground: oklch(0.147 0.004 49.25);
+            --card: oklch(1 0 0);
+            --card-foreground: oklch(0.147 0.004 49.25);
+            --popover: oklch(1 0 0);
+            --popover-foreground: oklch(0.147 0.004 49.25);
+            --primary: oklch(0.216 0.006 56.043);
+            --primary-foreground: oklch(0.985 0.001 106.423);
+            --secondary: oklch(0.97 0.001 106.424);
+            --secondary-foreground: oklch(0.216 0.006 56.043);
+            --muted: oklch(0.97 0.001 106.424);
+            --muted-foreground: oklch(0.553 0.013 58.071);
+            --accent: oklch(0.65 0.2 145);
+            --accent-foreground: oklch(0.216 0.006 56.043);
+            --destructive: oklch(0.577 0.245 27.325);
+            --destructive-foreground: oklch(0.577 0.245 27.325);
+            --border: oklch(0.923 0.003 48.717);
+            --border-red: oklch(0.5493 0.131 26.86);
+            --input: oklch(0.923 0.003 48.717);
+            --ring: oklch(72.3% 0.219 149.579);
+            --radius: 0.625rem;
+            --sidebar: oklch(0.973 0.036 142.742);
+            --sidebar-foreground: oklch(0.147 0.004 49.25);
+            --sidebar-primary: oklch(0.216 0.006 56.043);
+            --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
+            --sidebar-accent: oklch(0.9 0.05 145);
+            --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
+            --sidebar-border: oklch(0.923 0.003 48.717);
+            --sidebar-ring: oklch(0.709 0.01 56.259);
+        }
 
-:root {
-  --background: oklch(0.99 0.02 145);
-  --foreground: oklch(0.147 0.004 49.25);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.147 0.004 49.25);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.147 0.004 49.25);
-  --primary: oklch(0.216 0.006 56.043);
-  --primary-foreground: oklch(0.985 0.001 106.423);
-  --secondary: oklch(0.97 0.001 106.424);
-  --secondary-foreground: oklch(0.216 0.006 56.043);
-  --muted: oklch(0.97 0.001 106.424);
-  --muted-foreground: oklch(0.553 0.013 58.071);
-  --accent: oklch(0.65 0.2 145);
-  --accent-foreground: oklch(0.216 0.006 56.043);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.923 0.003 48.717);
-  --border-red: oklch(0.5493 0.131 26.86);
-  --input: oklch(0.923 0.003 48.717);
-  --ring: oklch(72.3% 0.219 149.579);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.973 0.036 142.742);
-  --sidebar-foreground: oklch(0.147 0.004 49.25);
-  --sidebar-primary: oklch(0.216 0.006 56.043);
-  --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-accent: oklch(0.9 0.05 145);
-  --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
-  --sidebar-border: oklch(0.923 0.003 48.717);
-  --sidebar-ring: oklch(0.709 0.01 56.259);
-}
+        .dark {
+            --background: oklch(0.35 0.008 145);
+            --foreground: oklch(0.92 0.003 145);
+            --card: oklch(0.32 0.006 145);
+            --card-foreground: oklch(0.92 0.003 145);
+            --popover: oklch(0.32 0.006 145);
+            --popover-foreground: oklch(0.92 0.003 145);
+            --primary: oklch(0.92 0.003 145);
+            --primary-foreground: oklch(0.216 0.006 56.043);
+            --border-red: oklch(0.5493 0.131 26.86);
+            --secondary: oklch(0.4 0.01 145);
+            --secondary-foreground: oklch(0.92 0.003 145);
+            --muted: oklch(0.38 0.008 145);
+            --muted-foreground: oklch(0.75 0.005 145);
+            --accent: oklch(0.6 0.08 145);
+            --accent-foreground: oklch(0.92 0.003 145);
+            --destructive: oklch(0.396 0.141 25.723);
+            --destructive-foreground: oklch(0.637 0.237 25.331);
+            --border: oklch(0.45 0.01 145);
+            --input: oklch(0.45 0.01 145);
+            --ring: oklch(72.3% 0.15 149.579);
+            --sidebar: oklch(0.25 0.008 145);
+            --sidebar-foreground: oklch(0.92 0.003 145);
+            --sidebar-primary: oklch(0.7 0.05 145);
+            --sidebar-primary-foreground: oklch(0.92 0.003 145);
+            --sidebar-accent: oklch(0.5 0.01 145);
+            --sidebar-accent-foreground: oklch(0.92 0.003 145);
+            --sidebar-border: oklch(0.3 0.008 145);
+            --sidebar-ring: oklch(0.6 0.05 145);
+        }
 
-.dark {
-  --background: oklch(0.35 0.008 145);
-  --foreground: oklch(0.92 0.003 145);
-  --card: oklch(0.32 0.006 145);
-  --card-foreground: oklch(0.92 0.003 145);
-  --popover: oklch(0.32 0.006 145);
-  --popover-foreground: oklch(0.92 0.003 145);
-  --primary: oklch(0.92 0.003 145);
-  --primary-foreground: oklch(0.216 0.006 56.043);
-  --border-red: oklch(0.5493 0.131 26.86);
-  --secondary: oklch(0.4 0.01 145);
-  --secondary-foreground: oklch(0.92 0.003 145);
-  --muted: oklch(0.38 0.008 145);
-  --muted-foreground: oklch(0.75 0.005 145);
-  --accent: oklch(0.6 0.08 145);
-  --accent-foreground: oklch(0.92 0.003 145);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.45 0.01 145);
-  --input: oklch(0.45 0.01 145);
-  --ring: oklch(72.3% 0.15 149.579);
-  --sidebar: oklch(0.25 0.008 145);
-  --sidebar-foreground: oklch(0.92 0.003 145);
-  --sidebar-primary: oklch(0.7 0.05 145);
-  --sidebar-primary-foreground: oklch(0.92 0.003 145);
-  --sidebar-accent: oklch(0.5 0.01 145);
-  --sidebar-accent-foreground: oklch(0.92 0.003 145);
-  --sidebar-border: oklch(0.3 0.008 145);
-  --sidebar-ring: oklch(0.6 0.05 145);
-}
+        @layer base {
+            * {
+                @apply border-border outline-ring/50;
+            }
+            body {
+                @apply bg-background text-foreground;
+            }
+        }
+        ```
+    3. ### Formkit setup and theming
+        #### **Create a `formkit.config.ts` file**
+        ```typescript
+        // formkit.config.ts
+        import { rootClasses } from "./formkit.theme.ts";
+        import { defaultConfig } from "@formkit/vue";
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-```
+        export default defaultConfig({
+            config: {
+                rootClasses,
+            },
+        });
+        ```
 
-## 3. Formkit setup and theming
+        #### **Add the config to your application entry point**
+        ```typescript
+        // main.ts
+        import { createApp } from "vue";
+        import "./style.css";
+        import { plugin, defaultConfig } from "@formkit/vue";
+        import App from "./App.vue";
+        import config from "../formkit.config";
 
-### **Create a `formkit.config.ts` file**
+        createApp(App).use(plugin, defaultConfig(config)).mount("#app");
+        ```
+        #### **Create a `formkit.theme.ts` file**
 
-```typescript
-// formkit.config.ts
-import { rootClasses } from "./formkit.theme.ts";
-import { defaultConfig } from "@formkit/vue";
-
-export default defaultConfig({
-  config: {
-    rootClasses,
-  },
-});
-```
-
-### **Add the config to your application entry point**
-
-```typescript
-// main.ts
-import { createApp } from "vue";
-import "./style.css";
-import { plugin, defaultConfig } from "@formkit/vue";
-import App from "./App.vue";
-import config from "../formkit.config";
-
-createApp(App).use(plugin, defaultConfig(config)).mount("#app");
-```
-
-### **Create a `formkit.theme.ts` file**
-
-> This file is very long but contains the styling for all elements that could be rendered
-> by the formkit library. You can either copy and paste the file from the gist I created below,
-> or setup your own theme at https://themes.formkit.com/
+        <Aside>
+            This file is very long but contains the styling for all elements that could be rendered
+            by the formkit library. You can either copy and paste the file from the gist I created below,
+            or setup your own theme at https://themes.formkit.com/
+        </Aside>
+</Steps>
 
 ````typescript
 // formkit.theme.ts
@@ -3690,7 +3696,8 @@ const globals: Record<string, Record<string, boolean>> = {
 };
 ````
 
-## 4. Usage
+## Usage
+
 ```vue
 <script setup lang="ts">
 import {
