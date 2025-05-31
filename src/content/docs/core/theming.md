@@ -1,6 +1,6 @@
 ---
 title: Themes and Styling
-description: Setting and updating themes
+description: Setting and updating themes for the form builder
 ---
 
 There are two different theme files, which you should have created during the setup process.
