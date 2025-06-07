@@ -10,6 +10,7 @@ export default defineConfig({
   site: "https://vueformforge.com/",
   integrations: [starlight({
     title: "Form Forge Docs",
+    favicon: "/favicon.svg",
     social: [
       {
         icon: "github",
