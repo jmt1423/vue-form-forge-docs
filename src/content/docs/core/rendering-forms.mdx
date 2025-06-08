@@ -1,0 +1,64 @@
+---
+title: Rendering Created Forms
+description: Guide to using the form schema created by your user
+---
+import { Aside } from "@astrojs/starlight/components";
+
+Rendering forms your users create is a simple process...
+
+Every time a user drags in a Formkit component into the form area it will automatically add it to the
+saved schema object in the `default-form-elements.ts` file:
+
+```typescript
+//default-form-elements.ts
+export const formSchema = ref<FormKitSchemaFormKit[]>([
+  {
+    $formkit: "submit",
+    outerClass: "!col-span-2 pt-2",
+    type: "submit",
+    name: "submit_button",
+    label: "Submit",
+  },
+]);
+```
+
+Before the schema is used, it is cleaned in the `format-schema.ts` file, this is because of a `__key` field that's
+added to the original schema object which allows the use of sorting duplicate elements.
+
+<Aside type="danger">
+    Without the `__key` field formkit will treat elements of the same type as the same element
+    and can cause undesirable side effects with the builder.
+</Aside>
+
+To use the cleaned object and render the created form elsewhere in your website you can use the object list inside of a
+`<FormkitSchema>` component like this:
+
+```vue
+<script setup lang="ts">
+    import createFormattedSchema from "../utils/format-schema";
+    import { ref } from 'vue'
+
+    const formattedSchema = createFormattedSchema(formSchema);
+    const data = ref({});
+</script>
+
+<template>
+    <FormKit
+        type="form"
+        :actions="false"
+        v-model="data"
+        @submit="handleSubmit"
+        form-class="w-full !grid !grid-cols-2 gap-x-4"
+        >
+            <FormKitSchema :schema="formattedSchema" />
+        </FormKit>
+
+    <h3 class="text-[11px] font-medium mb-2 text-foreground/80">
+        Form Data:
+    </h3>
+
+    <pre class="text-[11px] text-muted-foreground">{{
+    JSON.stringify(data, null, 2)
+    }}</pre>
+</template>
+```

@@ -39,6 +39,7 @@ export default defineConfig({
             { label: "Theming", slug: "core/theming" },
             { label: "AI Assistant", slug: "core/ai-assistant" },
             { label: "UI Components", slug: "core/ui-components" },
+            { label: "Rendering Forms", slug: "core/rendering-forms"},
             { label: "Default Items and Pro Inputs", slug: "core/pro-inputs" },
           ],
         },
